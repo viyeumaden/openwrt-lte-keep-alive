@@ -1,12 +1,7 @@
 #!/bin/ash
 # Installation script.
 
-install_netcat()
-{
-	echo "Installing netcat (opkg install netcat) ..."
-    opkg -V0 update
-    opkg -V0 install netcat
-}
+
 
 finish(){
 	echo ""
@@ -38,14 +33,6 @@ download_files()
 echo ""
 echo "OpenWRT Keep-alive scripts."
 
-while true; do
-    read -p "This will install netcat as a prerequisite. Do you want to continue (y/n)? " yn
-    case $yn in
-        [Yy]* ) install_netcat; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer 'y' or 'n'.";;
-    esac
-done
 
 echo ""
 DIR=$( cd $(dirname $0) ; pwd -P )
