@@ -1,7 +1,12 @@
 #!/bin/ash
 # Installation script.
 
-
+install_netcat()
+{
+	echo "Installing netcat (opkg install netcat) ..."
+    opkg -V0 update
+    opkg -V0 install netcat
+}
 
 finish(){
 	echo ""
@@ -22,7 +27,7 @@ finish(){
 download_files()
 {
 	DIR=$( cd $(dirname $0) ; pwd -P )
-	echo "Downloading files from https://github.com/viyeumaden/openwrt-lte-keep-alive ..."
+	echo "Downloading files github.com"
     wget -q --no-check-certificate https://raw.githubusercontent.com/viyeumaden/openwrt-lte-keep-alive/master/dns-test.sh -O dns-test.sh && chmod +x dns-test.sh
     wget -q --no-check-certificate https://raw.githubusercontent.com/viyeumaden/openwrt-lte-keep-alive/master/internet-keep-alive.sh -O internet-keep-alive.sh && chmod +x internet-keep-alive.sh
     wget -q --no-check-certificate https://raw.githubusercontent.com/viyeumaden/openwrt-lte-keep-alive/master/restart-interface.sh -O restart-interface.sh && chmod +x restart-interface.sh
@@ -33,6 +38,14 @@ download_files()
 echo ""
 echo "OpenWRT Keep-alive scripts."
 
+while true; do
+    read -p "This will install netcat as a prerequisite. Do you want to continue (y/n)? " yn
+    case $yn in
+        [Yy]* ) install_netcat; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer 'y' or 'n'.";;
+    esac
+done
 
 echo ""
 DIR=$( cd $(dirname $0) ; pwd -P )
@@ -44,6 +57,5 @@ while true; do
         * ) echo "Please answer 'y' or 'n'.";;
     esac
 done
-
 
 
